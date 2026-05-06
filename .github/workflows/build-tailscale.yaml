@@ -101,6 +101,12 @@ jobs:
         with:
           repository: ${{ env.REPO }}
           ref: ${{ env.TAG }}
+      - name: Checkout glinet-tailscale-updater (patches)
+        uses: actions/checkout@v4
+        with:
+          path: repo
+      - name: Apply nft fwmark native-endian patch (remove when upstream #19601 is in release)
+        run: patch -p1 < repo/patches/0001-fix-nftables-fwmark-endianness.patch
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
